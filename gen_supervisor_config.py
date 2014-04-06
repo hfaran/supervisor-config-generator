@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 from inspect import cleandoc
 from jinja2 import Template
 
@@ -11,14 +10,13 @@ def get_template(inet_http_server=False):
     """Returns template"""
     template = ""
     if inet_http_server:
-        template += """
+        template += cleandoc("""
         [inet_http_server]
         port=0.0.0.0:{{ inet_port }}
         username={{ inet_username }}
         password={{ inet_password }}
-
-        """
-    template += """
+        """) + "\n\n"
+    template += cleandoc("""
     [unix_http_server]
     file=/tmp/{{ program_name }}-supervisor.sock
 
@@ -38,7 +36,7 @@ def get_template(inet_http_server=False):
     supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
     [supervisorctl]
-    prompt = {{ ctl_prompt }}
+    prompt = {{ program_name }}
     serverurl=unix:///tmp/{{ program_name }}-supervisor.sock
 
     {% for pid in range(num_proc) %}
@@ -47,7 +45,7 @@ def get_template(inet_http_server=False):
     stderr_logfile = /var/log/{{ program_name }}/stderr.log
     stdout_logfile = /var/log/{{ program_name }}/stdout.log
     {% endfor %}
-    """
+    """)
 
     return Template(cleandoc(template))
 
@@ -73,4 +71,5 @@ if __name__ == '__main__':
         "Enter number of instances to run of program: "
     ))
 
+    print("")
     print(get_template(inet_http_server).render(**kwargs))
