@@ -5,7 +5,15 @@ Simple `supervisord.conf` Generator
 
 ## Usage
 
-Just run `gen_supervisor_config.py` and fill in the prompts:
+* Install `Jinja2` and grab this repository:
+
+```bash
+sudo pip install Jinja2
+git clone https://github.com/hfaran/supervisor-config-generator.git
+cd supervisor-config-generator
+```
+
+* Just run `gen_supervisor_config.py` and fill in the prompts:
 
 ```bash
 $ ./gen_supervisor_config.py
@@ -18,7 +26,7 @@ Enter command to run to start program: ./my_web_app.py -p 80
 Enter number of instances to run of program: 3
 ```
 
-From that you will get an output like this:
+* From that you will get an output like this:
 
 ```
 [inet_http_server]
