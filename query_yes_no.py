@@ -1,4 +1,5 @@
 """Source: http://code.activestate.com/recipes/577058/"""
+
 import sys
 
 
@@ -12,8 +13,8 @@ def query_yes_no(question, default="yes"):
 
     The "answer" return value is one of "yes" or "no".
     """
-    valid = {"yes": "yes",   "y": "yes",  "ye": "yes",
-             "no": "no",     "n": "no"}
+    valid = {"yes": True,   "y": True,  "ye": True,
+             "no": False,     "n": False}
     if default == None:
         prompt = " [y/n] "
     elif default == "yes":
@@ -27,7 +28,7 @@ def query_yes_no(question, default="yes"):
         sys.stdout.write(question + prompt)
         choice = raw_input().lower()
         if default is not None and choice == '':
-            return default
+            return valid[default]
         elif choice in valid.keys():
             return valid[choice]
         else:
